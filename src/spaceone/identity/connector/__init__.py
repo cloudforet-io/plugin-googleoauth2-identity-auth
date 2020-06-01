@@ -1,0 +1,1 @@
+from spaceone.identity.connector.google_connector import GoogleConnector
