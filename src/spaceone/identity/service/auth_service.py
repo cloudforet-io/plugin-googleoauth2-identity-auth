@@ -30,18 +30,40 @@ class AuthService(BaseService):
         super().__init__(metadata)
 
     @transaction
-    @check_required(['options','credentials'])
+    @check_required(['options'])
+    def init(self, params):
+        """ verify options
+        Args:
+            params
+              - options
+
+        Returns:
+            - metadata
+        Raises:
+            ERROR_NOT_FOUND:
+        """
+        manager = self.locator.get_manager('AuthManager')
+        options = params['options']
+        active = manager.verify(options)
+        options['auth_type'] = 'keycloak'
+        endpoints = manager.get_endpoint(options)
+        capability= endpoints
+        return {'metadata': capability}
+
+
+    @transaction
+    @check_required(['options','secret_data'])
     def verify(self, params):
         """ verify options
         Args:
             params
               - options
-              - credentials: may be empty dictionary
+              - secret_data: may be empty dictionary
 
         Returns:
 
         Raises:
-            ERROR_NOT_FOUND: 
+            ERROR_NOT_FOUND:
         """
         manager = self.locator.get_manager('AuthManager')
         options = params['options']
@@ -51,10 +73,10 @@ class AuthService(BaseService):
             'options':options
             }
         _LOGGER.debug(result)
-        return result
+        return {}
 
     @transaction
-    @check_required(['options','credentials'])
+    @check_required(['options','secret_data'])
     def find(self, params):
         """ verify options
         Args:
@@ -66,12 +88,12 @@ class AuthService(BaseService):
         Returns:
 
         Raises:
-            ERROR_NOT_FOUND: 
+            ERROR_NOT_FOUND:
         """
         _LOGGER.debug(f'[find] params: {params}')
         manager = self.locator.get_manager('AuthManager')
         options = params['options']
-        credentials = params['credentials']
+        credentials = params['secret_data']
         # collect plugins_info
         user_id = params.get('user_id', None)
         keyword = params.get('keyword', None)
@@ -81,22 +103,23 @@ class AuthService(BaseService):
         return [user_info], 1
 
     @transaction
-    @check_required(['options','credentials', 'user_credentials'])
+    @check_required(['options','secret_data', 'user_credentials'])
     def login(self, params):
         """ verify options
         Args:
             params
               - options
-              - credentials
+              - secret_data
               - user_credentials
 
         Returns:
 
         Raises:
-            ERROR_NOT_FOUND: 
+            ERROR_NOT_FOUND:
         """
         manager = self.locator.get_manager('AuthManager')
         options = params['options']
-        credentials = params['credentials']
+        credentials = params['secret_data']
         user_credentials = params['user_credentials']
         return manager.login(options, credentials, user_credentials)
+

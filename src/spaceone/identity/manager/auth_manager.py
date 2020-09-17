@@ -30,7 +30,7 @@ class AuthManager(BaseManager):
     def __init__(self, transaction):
         super().__init__(transaction)
 
-        
+
     ###################
     # Verify
     ###################
@@ -91,6 +91,15 @@ class AuthManager(BaseManager):
             'state': 'UNIDENTIFIED'
         }
         return user_info
+
+    def get_endpoint(self, options):
+        """
+        Discover endpoints
+        """
+        connector = self.locator.get_connector('GoogleConnector')
+        endpoints = connector.get_endpoint(options)
+        return endpoints
+
 
     def _verify_user_id(self, domain, user_id):
         """

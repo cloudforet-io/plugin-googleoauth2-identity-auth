@@ -14,7 +14,7 @@
 #   See the License for the specific language governing permissions and
 #   limitations under the License.
 
-__all__ = ['UserInfo', 'UsersInfo', 'AuthVerifyInfo']
+__all__ = ['UserInfo', 'UsersInfo', 'AuthVerifyInfo', 'PluginInfo']
 
 import functools
 from spaceone.api.identity.plugin import auth_pb2
@@ -27,6 +27,12 @@ def UsersInfo(users_list, total_count):
     users = list(map(functools.partial(UserInfo), users_list))
     return auth_pb2.UsersInfo(results=users, total_count=total_count)
 
+# V1.1
+def PluginInfo(result):
+    result['metadata'] = change_struct_type(result['metadata'])
+    return auth_pb2.PluginInfo(**result)
+
+# v1.0 (Deprecated)
 def AuthVerifyInfo(result):
     """ result
     {

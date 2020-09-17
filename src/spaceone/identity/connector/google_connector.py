@@ -58,7 +58,7 @@ class GoogleConnector(BaseConnector):
         # Check tokeninfo
         r = requests.post(self.token_url, headers=headers, data=json.dumps(data))
         if r.status_code != 200:
-            _LOGGER.debug("GoogleConnector return code:%s" % r.json())
+            _LOGGER.debug(f"GoogleConnector return code {r.status_code} : {r.json()}")
             raise ERROR_NOT_FOUND(key='user', value='<from access_token>')
         # status_code == 200
         r2 = r.json()
@@ -75,3 +75,11 @@ class GoogleConnector(BaseConnector):
     def find(self, options, params):
         # TODO: NOT SUPPORT
         raise ERROR_NOT_FOUND(key='find', value='does not support')
+
+    def get_endpoint(self, options):
+        result = {
+            'authorization_endpoint': self.auth_server,
+            'token_endpoint': self.token_url,
+            'userinfo_endpoint': self.user_url
+        }
+        return result
