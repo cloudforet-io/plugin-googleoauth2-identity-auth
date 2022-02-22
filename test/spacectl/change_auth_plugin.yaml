@@ -1,0 +1,7 @@
+plugin_info:
+  options:
+    auth_type: google_oauth2
+    client_id: test_client_id
+    domain: gmail.com
+  plugin_id: plugin-googleoauth2-identity-auth
+  version: '1.1'
