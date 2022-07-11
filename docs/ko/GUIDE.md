@@ -36,7 +36,7 @@
 
 <img src="GUIDE-img/create-client-id(h2)-2.png" width="80%" height="80%">
 
-(3) OAuth 클라이언트 생성 직후 모달을 통해 [클라이언트 ID], [클라이언트 보안 비밀번호]를 획득할 수 있습니다.
+(3) OAuth 클라이언트 생성 직후 모달을 통해 [클라이언트 ID], [클라이언트 보안 비밀번호]를 획득할 수 있습니다.  
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;추후 설정에 사용됨에 따라 [JSON 다운로드]를 권장합니다.
 
 <img src="GUIDE-img/create-client-id(h2)-3.png" width="50%" height="50%">
