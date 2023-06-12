@@ -25,9 +25,10 @@ from spaceone.core.connector import BaseConnector
 
 _LOGGER = logging.getLogger(__name__)
 
+
 class GoogleConnector(BaseConnector):
-    def __init__(self, transaction, config):
-        super().__init__(transaction, config)
+    def __init__(self, *args, **kwargs):
+        super().__init__(*args, **kwargs)
         self.auth_server = 'https://www.googleapis.com'
         self.token_url = '%s/oauth2/v2/tokeninfo' % self.auth_server
         self.user_url = '%s/oauth2/v3/userinfo' % self.auth_server
@@ -50,7 +51,7 @@ class GoogleConnector(BaseConnector):
           - access_token
         """
         # Authorization Grant
-        headers={'Content-Type':'application/json'}
+        headers = {'Content-Type': 'application/json'}
         data = {
             'access_token': user_credentials['access_token'],
         }
@@ -70,7 +71,6 @@ class GoogleConnector(BaseConnector):
             result['state'] = 'ENABLED'
             return result
         raise ERROR_NOT_FOUND(key='user', value='<from access_token>')
-
 
     def find(self, options, params):
         # TODO: NOT SUPPORT
