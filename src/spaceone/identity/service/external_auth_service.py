@@ -53,6 +53,8 @@ class ExternalAuthService(BaseService):
         options["auth_type"] = "keycloak"
         metadata = self.external_auth_manager.get_endpoint(options)
         metadata.update({"auth_type": "google_oauth2"})
+        metadata.update({"identity_provider": "google"})
+        metadata.update({"protocol": "google_oauth2"})
 
         return {"metadata": metadata}
 
