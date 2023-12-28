@@ -1,3 +1,3 @@
 PROTO = {
-    'spaceone.identity.api.plugin.auth': ['Auth']
+    'spaceone.identity.api.plugin.external_auth': ['ExternalAuth'],
 }
