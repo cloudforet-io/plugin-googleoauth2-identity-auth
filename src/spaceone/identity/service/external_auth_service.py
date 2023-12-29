@@ -65,8 +65,11 @@ class ExternalAuthService(BaseService):
         """verify options
         Args:
             params
-              - options
-              - secret_data: may be empty dictionary
+              - 'options' : 'dict'
+              - 'secret_data': may be empty dictionary
+              - 'credentials': 'dict'                         #required
+              - 'domain_id': 'str'                            #required
+              - 'metadata': 'dict'
 
         Returns:
 
@@ -78,7 +81,8 @@ class ExternalAuthService(BaseService):
         secret_data = params["secret_data"]
         credentials = params["credentials"]
         domain_id = params["domain_id"]
+        metadata = params.get("metadata", {})
 
         return self.external_auth_manager.authorize(
-            options, secret_data, credentials, domain_id
+            options, secret_data, credentials, domain_id, metadata
         )
