@@ -55,6 +55,7 @@ class ExternalAuthManager(BaseManager):
         secret_data: dict,
         credentials: dict,
         domain_id: str,
+        metadata: dict,
         schema_id: str = None,
     ):
         """Get access_token from credentials
@@ -70,7 +71,8 @@ class ExternalAuthManager(BaseManager):
 
         user_info = self.google_connector.authorize(options, secret_data, credentials)
         # check user_info, if needed
-        if validator := options.get("validator"):
+        validator = metadata.get("validator", options.get("validator"))
+        if validator:
             user_id = user_info["user_id"]
             self._verify_user_id(validator, user_id)
         return user_info
