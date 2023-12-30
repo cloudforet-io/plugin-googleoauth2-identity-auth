@@ -74,7 +74,7 @@ class GoogleConnector(BaseConnector):
         if email := response_info.get("email"):
             user_info["email"] = email
             user_info["user_id"] = email
-            user_info["state"] = email
+            user_info["state"] = "ENABLED"
             return user_info
         raise ERROR_NOT_FOUND(key="user", value="<from access_token>")
 
