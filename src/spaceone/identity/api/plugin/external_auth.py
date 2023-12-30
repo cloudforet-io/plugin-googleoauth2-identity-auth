@@ -39,4 +39,4 @@ class ExternalAuth(BaseAPI, external_auth_pb2_grpc.ExternalAuthServicer):
             "ExternalAuthService", metadata
         ) as external_auth_svc:
             data = external_auth_svc.authorize(params)
-            return self.locator.get_info("UsersInfo", data)
+            return self.locator.get_info("UserInfo", data)
