@@ -57,7 +57,7 @@ class GoogleConnector(BaseConnector):
         data = {
             "access_token": credentials["access_token"],
         }
-        _LOGGER.debug("data:%s" % data)
+        _LOGGER.debug(f"[authorize] data: {data}")
         # Check tokeninfo
         response = requests.post(self.token_url, headers=headers, data=json.dumps(data))
         if response.status_code != 200:
