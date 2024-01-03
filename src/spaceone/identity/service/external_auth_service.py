@@ -27,13 +27,15 @@ _LOGGER = logging.getLogger(__name__)
 
 @authentication_handler
 class ExternalAuthService(BaseService):
+    resource = "ExternalAuth"
+
     def __init__(self, metadata):
         super().__init__(metadata)
         self.external_auth_manager: ExternalAuthManager = self.locator.get_manager(
             "ExternalAuthManager"
         )
 
-    @transaction
+    @transaction()
     @check_required(["options", "domain_id"])
     def init(self, params):
         """verify options
@@ -48,18 +50,16 @@ class ExternalAuthService(BaseService):
             ERROR_NOT_FOUND:
         """
         options = params["options"]
-        active = self.external_auth_manager.init(options)
+        self.external_auth_manager.init(options)
 
-        # options["auth_type"] = "keycloak"
         metadata = self.external_auth_manager.get_endpoint(options)
         metadata.update(options)
-        metadata.update({"auth_type": "google_oauth2"})
         metadata.update({"identity_provider": "google"})
-        metadata.update({"protocol": "google_oauth2"})
+        metadata.update({"protocol": "oauth2"})
 
         return {"metadata": metadata}
 
-    @transaction
+    @transaction()
     @check_required(["options", "secret_data", "credentials", "domain_id"])
     def authorize(self, params: dict):
         """verify options
